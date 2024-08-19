@@ -419,6 +419,6 @@ static BOOL findCell(ASNodeController *nodeController, NSArray <NSString *> *ide
        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"YouPiPEnabled"]; 
     }
     if (![allKeys containsObject:kGoogleSigninFix]) { 
-       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kGoogleSigninFix];
+       [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kGoogleSigninFix];
     }
 }
