@@ -1,0 +1,35 @@
+name: Update Submodules
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 */7 * *'  # Every 7 days at midnight UTC
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code with submodules
+        uses: actions/checkout@v4.1.7
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Update submodules
+        run: |
+          git submodule update --init --recursive --remote
+          git add .
+
+          # Only commit if there are changes
+          if ! git diff --cached --quiet; then
+            git commit -m "Update submodules"
+            git push origin HEAD
+          else
+            echo "No submodule changes to commit."
+          fi
